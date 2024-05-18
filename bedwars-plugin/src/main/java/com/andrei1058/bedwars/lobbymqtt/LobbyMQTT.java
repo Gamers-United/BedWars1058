@@ -38,13 +38,11 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 public class LobbyMQTT {
     private static final MqttProperties msgPropertyDefault = new MqttProperties();
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(LobbyMQTT.class);
 
     private static String mqttHost;
     private static String mqttUsername;
@@ -63,9 +61,6 @@ public class LobbyMQTT {
             logger.severe("MQTT Setup Failed: Mandatory MQTT parameters missing.");
             return;
         }
-
-        // Set up the mqtt properties
-        msgPropertyDefault.setMessageExpiryInterval(3600L);
 
         logger = BedWars.plugin.getLogger();
         topicPrefix = tPrefix;
@@ -127,6 +122,10 @@ public class LobbyMQTT {
             // Name
             MqttMessage nameMsg = new MqttMessage(arena.getDisplayName().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "name"), nameMsg);
+
+            // Server
+            MqttMessage serverMsg = new MqttMessage(clientID.toUpperCase().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            mqtt.publish(getArenaTopic(arena, "server"), serverMsg);
 
             // Status
             MqttMessage statusMsg = new MqttMessage(arena.getStatus().toString().toUpperCase().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
@@ -260,6 +259,9 @@ public class LobbyMQTT {
 
             // Name
             mqtt.publish(getArenaTopic(arenaGroup, arenaID, "name"), zeroMsg);
+
+            // Server
+            mqtt.publish(getArenaTopic(arenaGroup, arenaID, "server"), zeroMsg);
 
             // Status
             mqtt.publish(getArenaTopic(arenaGroup, arenaID, "status"), zeroMsg);
