@@ -26,15 +26,16 @@ import org.bukkit.event.HandlerList;
 public class ArenaRestartEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
 
-    private String arena, worldName;
+    private String arena, worldName, group;
 
     /**
      * Called when an arena is restarting.
      * After the world was unloaded.
      */
-    public ArenaRestartEvent(String arena, String worldName) {
+    public ArenaRestartEvent(String arena, String worldName, String group) {
         this.arena = arena;
         this.worldName = worldName;
+        this.group = group;
     }
 
     /**
@@ -52,6 +53,8 @@ public class ArenaRestartEvent extends Event {
     public String getWorldName() {
         return worldName;
     }
+
+    public String getArenaGroup() { return group; }
 
     public static HandlerList getHandlerList() {
         return HANDLERS;

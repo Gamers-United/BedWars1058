@@ -76,12 +76,23 @@ public class ConfigPath {
     public static final String GENERATOR_EMERALD_TIER_III_START = "emerald.tierIII.start";
 
 
-    public static final String GENERAL_CONFIGURATION_BUNGEE_MODE_GAMES_BEFORE_RESTART = "bungee-settings.games-before-restart";
-    public static final String GENERAL_CONFIGURATION_AUTO_SCALE_LIMIT = "bungee-settings.auto-scale-clone-limit";
-    public static final String GENERAL_CONFIGURATION_BUNGEE_OPTION_RESTART_CMD = "bungee-settings.restart-cmd";
-    public static final String GENERAL_CONFIGURATION_BUNGEE_OPTION_LOBBY_SERVERS = "bungee-settings.lobby-sockets";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_RESTART_ENABLE = "bungee-settings.enable-auto-restart";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_RESTART_NUMBER_GAMES = "bungee-settings.games-before-restart";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_RESTART_COMMANDLINE = "bungee-settings.restart-cmd";
+
+    public static final String GENERAL_CONFIGURATION_BUNGEE_OPTION_AUTO_SCALE_LIMIT = "bungee-settings.auto-scale-clone-limit";
     public static final String GENERAL_CONFIGURATION_BUNGEE_OPTION_SERVER_ID = "bungee-settings.server-id";
     public static final String GENERAL_CONFIGURATION_BUNGEE_OPTION_BWP_TIME_OUT = "bungee-settings.bwp-time-out";
+
+    public static final String GENERAL_CONFIGURATION_BUNGEE_SOCKET_ENABLE = "bungee-settings.socket.enable";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_SOCKET_ADDRESSES = "bungee-settings.socket.addresses";
+
+    public static final String GENERAL_CONFIGURATION_BUNGEE_MQTT_ENABLE = "bungee-settings.mqtt.enable";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_MQTT_HOST = "bungee-settings.mqtt.host";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_MQTT_TOPIC_PREFIX = "bungee-settings.mqtt.topic-prefix";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_MQTT_USERNAME = "bungee-settings.mqtt.username";
+    public static final String GENERAL_CONFIGURATION_BUNGEE_MQTT_PASSWORD = "bungee-settings.mqtt.password";
+
 
     public static final String GENERAL_CONFIGURATION_ALLOW_FIRE_EXTINGUISH = "allow-fire-extinguish";
     public static final String GENERAL_CONFIGURATION_ENABLE_HALLOWEEN = "enable-halloween-feature";

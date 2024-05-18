@@ -80,10 +80,6 @@ public class MainConfig extends ConfigManager {
 
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_REJOIN_TIME, 60 * 5);
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_RE_SPAWN_INVULNERABILITY, 4000);
-        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MODE_GAMES_BEFORE_RESTART, 30);
-        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_RESTART_CMD, "restart");
-        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_AUTO_SCALE_LIMIT, 5);
-        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_LOBBY_SERVERS, Collections.singletonList("0.0.0.0:2019"));
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_START_COUNTDOWN_REGULAR, 40);
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_START_COUNTDOWN_HALF, 25);
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_START_COUNTDOWN_SHORTENED, 5);
@@ -95,8 +91,20 @@ public class MainConfig extends ConfigManager {
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_SHOUT_COOLDOWN, 30);
         yml.addDefault(ConfigPath.GENERAL_CONFIG_PLACEHOLDERS_REPLACEMENTS_SERVER_IP, "yourServer.Com");
         yml.addDefault(ConfigPath.GENERAL_CONFIG_PLACEHOLDERS_REPLACEMENTS_POWERED_BY, "BedWars1058");
+
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_ENABLE, true);
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_NUMBER_GAMES, 30);
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_COMMANDLINE, "restart");
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_AUTO_SCALE_LIMIT, 5);
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_SERVER_ID, "bw1");
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_BWP_TIME_OUT, 5000);
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ENABLE, false);
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ADDRESSES, Collections.singletonList("0.0.0.0:2019"));
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_ENABLE, false);
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_HOST, "localhost:1883");
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_TOPIC_PREFIX, "/bedwars1058");
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_USERNAME, "user");
+        yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_PASSWORD, "password");
 
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_HUNGER_WAITING, false);
         yml.addDefault(ConfigPath.GENERAL_CONFIGURATION_HUNGER_INGAME, false);
@@ -223,8 +231,16 @@ public class MainConfig extends ConfigManager {
 
         if (yml.get("bungee-settings.lobby-servers") != null) {
             List<String> sockets = new ArrayList<>(yml.getStringList("bungee-settings.lobby-servers"));
-            yml.set(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_LOBBY_SERVERS, sockets);
+            yml.set(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ADDRESSES, sockets);
+            yml.set(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ENABLE, true);
             yml.set("bungee-settings.lobby-servers", null);
+        }
+
+        if (yml.get("bungee-settings.lobby-sockets") != null) {
+            List<String> sockets = new ArrayList<>(yml.getStringList("bungee-settings.lobby-sockets"));
+            yml.set(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ADDRESSES, sockets);
+            yml.set(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ENABLE, true);
+            yml.set("bungee-settings.lobby-sockets", null);
         }
 
         if (yml.get("arenaGui.settings.showPlaying") != null) {

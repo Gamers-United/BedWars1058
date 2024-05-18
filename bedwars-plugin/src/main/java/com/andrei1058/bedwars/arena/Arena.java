@@ -109,7 +109,7 @@ public class Arena implements IArena {
     private static final HashMap<Player, IArena> arenaByPlayer = new HashMap<>();
     private static final HashMap<String, IArena> arenaByIdentifier = new HashMap<>();
     private static final LinkedList<IArena> arenas = new LinkedList<>();
-    private static int gamesBeforeRestart = config.getInt(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MODE_GAMES_BEFORE_RESTART);
+    private static int gamesBeforeRestart = config.getInt(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_NUMBER_GAMES);
     public static HashMap<UUID, Integer> afkCheck = new HashMap<>();
     public static HashMap<UUID, Integer> magicMilk = new HashMap<>();
 
@@ -1196,7 +1196,7 @@ public class Arena implements IArena {
             inWorld.kickPlayer("You're not supposed to be here.");
         }
         BedWars.getAPI().getRestoreAdapter().onDisable(this);
-        Bukkit.getPluginManager().callEvent(new ArenaDisableEvent(getArenaName(), getWorldName()));
+        Bukkit.getPluginManager().callEvent(new ArenaDisableEvent(getArenaName(), getWorldName(), getGroup()));
         destroyData();
     }
 
@@ -1214,7 +1214,7 @@ public class Arena implements IArena {
             perMinuteTask.cancel();
         }
         plugin.getLogger().log(Level.FINE, "Restarting arena: " + getArenaName());
-        Bukkit.getPluginManager().callEvent(new ArenaRestartEvent(getArenaName(), getWorldName()));
+        Bukkit.getPluginManager().callEvent(new ArenaRestartEvent(getArenaName(), getWorldName(), getGroup()));
         for (Player inWorld : getWorld().getPlayers()) {
             inWorld.kickPlayer("You're not supposed to be here.");
         }
@@ -2566,7 +2566,7 @@ public class Arena implements IArena {
         }
 
         // check amount of active clones
-        return config.getInt(ConfigPath.GENERAL_CONFIGURATION_AUTO_SCALE_LIMIT) > activeClones;
+        return config.getInt(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_AUTO_SCALE_LIMIT) > activeClones;
     }
 
     @Override

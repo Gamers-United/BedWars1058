@@ -26,16 +26,16 @@ import org.bukkit.event.HandlerList;
 public class ArenaDisableEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
 
-    private String arenaName;
-    private String worldName;
+    private String arenaName, worldName, group;
 
     /**
      * Called when an arena is disabled.
      * This is not called when you restart the server.
      */
-    public ArenaDisableEvent(String arenaName, String worldName) {
+    public ArenaDisableEvent(String arenaName, String worldName, String group) {
         this.arenaName = arenaName;
         this.worldName = worldName;
+        this.group = group;
     }
 
     /**
@@ -53,6 +53,8 @@ public class ArenaDisableEvent extends Event {
     public HandlerList getHandlers() {
         return HANDLERS;
     }
+
+    public String getArenaGroup() { return group; }
 
     public static HandlerList getHandlerList() {
         return HANDLERS;

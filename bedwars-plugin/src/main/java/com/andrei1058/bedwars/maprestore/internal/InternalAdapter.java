@@ -100,9 +100,9 @@ public class InternalAdapter extends RestoreAdapter {
         Bukkit.getScheduler().runTask(getOwner(), () -> {
             if (BedWars.getServerType() == ServerType.BUNGEE) {
                 if (Arena.getGamesBeforeRestart() == 0) {
-                    if (Arena.getArenas().isEmpty()) {
-                        plugin.getLogger().info("Dispatching command: " + config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_RESTART_CMD));
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_RESTART_CMD));
+                    if (Arena.getArenas().isEmpty() && config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_ENABLE)) {
+                        plugin.getLogger().info("Dispatching command: " + config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_COMMANDLINE));
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_COMMANDLINE));
                     }
                 } else {
                     if (Arena.getGamesBeforeRestart() != -1) {

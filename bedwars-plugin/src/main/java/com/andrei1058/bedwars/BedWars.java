@@ -58,9 +58,10 @@ import com.andrei1058.bedwars.listeners.blockstatus.BlockStatusListener;
 import com.andrei1058.bedwars.listeners.chat.ChatAFK;
 import com.andrei1058.bedwars.listeners.chat.ChatFormatting;
 import com.andrei1058.bedwars.listeners.joinhandler.*;
+import com.andrei1058.bedwars.lobbymqtt.ArenaListeners;
+import com.andrei1058.bedwars.lobbymqtt.LobbyMQTT;
 import com.andrei1058.bedwars.lobbysocket.ArenaSocket;
 import com.andrei1058.bedwars.lobbysocket.LoadedUsersCleaner;
-import com.andrei1058.bedwars.lobbysocket.SendTask;
 import com.andrei1058.bedwars.maprestore.internal.InternalAdapter;
 import com.andrei1058.bedwars.metrics.MetricsManager;
 import com.andrei1058.bedwars.money.internal.MoneyListeners;
@@ -115,6 +116,8 @@ public class BedWars extends JavaPlugin {
     public static StatsManager statsManager;
     public static BedWars plugin;
     public static VersionSupport nms;
+
+    public static LobbyMQTT mqtt = null;
 
     public static boolean isPaper = false;
 
@@ -286,9 +289,19 @@ public class BedWars extends JavaPlugin {
 
         if (getServerType() == ServerType.BUNGEE) {
             if (autoscale) {
-                //registerEvents(new ArenaListeners());
-                ArenaSocket.lobbies.addAll(config.getList(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_LOBBY_SERVERS));
-                new SendTask();
+                if (config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ENABLE)) {
+                    ArenaSocket.lobbies.addAll(config.getList(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_SOCKET_ADDRESSES));
+                    new com.andrei1058.bedwars.lobbysocket.SendTask();
+                }
+                if (config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_ENABLE)) {
+                    mqtt = new LobbyMQTT(config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_HOST),
+                            config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_TOPIC_PREFIX),
+                            config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_USERNAME),
+                            config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_MQTT_PASSWORD),
+                            config.getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_SERVER_ID));
+                    registerEvents(new ArenaListeners());
+                    //new com.andrei1058.bedwars.lobbymqtt.SendTask();
+                }
                 registerEvents(new AutoscaleListener(), new PrePartyListener(), new JoinListenerBungee());
                 Bukkit.getScheduler().runTaskTimerAsynchronously(this, new LoadedUsersCleaner(), 60L, 60L);
             } else {

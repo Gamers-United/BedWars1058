@@ -136,9 +136,11 @@ public class SlimeAdapter extends RestoreAdapter {
     public void onRestart(IArena a) {
         if (api.getServerType() == ServerType.BUNGEE) {
             if (api.getArenaUtil().getGamesBeforeRestart() == 0) {
-                if (api.getArenaUtil().getArenas().size() == 1 && api.getArenaUtil().getArenas().get(0).getStatus() == GameState.restarting) {
-                    getOwner().getLogger().info("Dispatching command: " + api.getConfigs().getMainConfig().getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_RESTART_CMD));
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), api.getConfigs().getMainConfig().getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_OPTION_RESTART_CMD));
+                if (api.getArenaUtil().getArenas().size() == 1 &&
+                    api.getArenaUtil().getArenas().get(0).getStatus() == GameState.restarting &&
+                    api.getConfigs().getMainConfig().getBoolean(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_ENABLE)) {
+                    getOwner().getLogger().info("Dispatching command: " + api.getConfigs().getMainConfig().getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_COMMANDLINE));
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), api.getConfigs().getMainConfig().getString(ConfigPath.GENERAL_CONFIGURATION_BUNGEE_RESTART_COMMANDLINE));
                 }
             } else {
                 if (api.getArenaUtil().getGamesBeforeRestart() != -1) {
