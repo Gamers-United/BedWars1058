@@ -120,31 +120,31 @@ public class LobbyMQTT {
 
         try {
             // Name
-            MqttMessage nameMsg = new MqttMessage(arena.getDisplayName().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage nameMsg = new MqttMessage(arena.getDisplayName().getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "name"), nameMsg);
 
             // Server
-            MqttMessage serverMsg = new MqttMessage(clientID.toUpperCase().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage serverMsg = new MqttMessage(clientID.toUpperCase().getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "server"), serverMsg);
 
             // Status
-            MqttMessage statusMsg = new MqttMessage(arena.getStatus().toString().toUpperCase().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage statusMsg = new MqttMessage(arena.getStatus().toString().toUpperCase().getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "status"), statusMsg);
 
             // Current Players
-            MqttMessage cpMessage = new MqttMessage(Integer.toString(arena.getPlayers().size()).getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage cpMessage = new MqttMessage(Integer.toString(arena.getPlayers().size()).getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "currentPlayers"), cpMessage);
 
             // Max Players
-            MqttMessage mpMessage = new MqttMessage(Integer.toString(arena.getMaxPlayers()).getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage mpMessage = new MqttMessage(Integer.toString(arena.getMaxPlayers()).getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "maxPlayers"), mpMessage);
 
             // Max In Team
-            MqttMessage mitMessage = new MqttMessage(Integer.toString(arena.getMaxInTeam()).getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage mitMessage = new MqttMessage(Integer.toString(arena.getMaxInTeam()).getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "maxInTeam"), mitMessage);
 
             // Spectate Status
-            MqttMessage specMessage = new MqttMessage(Boolean.toString(arena.isAllowSpectate()).getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+            MqttMessage specMessage = new MqttMessage(Boolean.toString(arena.isAllowSpectate()).getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
             mqtt.publish(getArenaTopic(arena, "spectate"), specMessage);
 
         } catch (MqttException e) {
@@ -165,15 +165,15 @@ public class LobbyMQTT {
             IArena arena = Arena.getArenaByPlayer(player);
             try {
                 // Player Name
-                MqttMessage nameMsg = new MqttMessage(player.getName().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+                MqttMessage nameMsg = new MqttMessage(player.getName().getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
                 mqtt.publish(getPlayerTopic(player, "name"), nameMsg);
 
                 // Server Name
-                MqttMessage serverMsg = new MqttMessage(clientID.getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+                MqttMessage serverMsg = new MqttMessage(clientID.getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
                 mqtt.publish(getPlayerTopic(player, "server"), serverMsg);
 
                 // Arena ID
-                MqttMessage arenaMsg = new MqttMessage(arena.getWorldName().getBytes(StandardCharsets.UTF_8), 1, true, msgPropertyDefault);
+                MqttMessage arenaMsg = new MqttMessage(arena.getWorldName().getBytes(StandardCharsets.UTF_8), 1, false, msgPropertyDefault);
                 mqtt.publish(getPlayerTopic(player, "status"), arenaMsg);
 
             } catch (MqttException e) {
